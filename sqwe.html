@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ДЛЯ МОЕЙ ЗАРИНЫ</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Montserrat:wght@100;900&family=Playfair+Display:ital,wght@1,900&display=swap');
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background: #000; overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        canvas { position: fixed; top: 0; left: 0; z-index: 1; }
+
+        #flash {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #fff; z-index: 1000; display: none;
+        }
+
+        #ui {
+            position: relative; z-index: 10;
+            height: 100vh; display: flex;
+            align-items: center; justify-content: center;
+            flex-direction: column; text-align: center;
+        }
+
+        #start-trigger {
+            pointer-events: all; padding: 20px 60px;
+            background: none; border: 2px solid #fff;
+            color: #fff; font-size: 1.2rem; letter-spacing: 10px;
+            cursor: pointer; z-index: 100;
+            transition: 0.4s;
+        }
+        #start-trigger:hover { background: #fff; color: #000; box-shadow: 0 0 50px #fff; }
+
+        #loader { display: none; color: #fff; }
+        .progress-bar { width: 300px; height: 2px; background: #222; margin: 20px auto; position: relative; }
+        #bar { width: 0%; height: 100%; background: #fff; }
+        .log-text { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; opacity: 0.5; }
+
+        /* ФИНАЛЬНЫЙ БЛОК */
+        #final {
+            display: none;
+            animation: epicZoom 0.6s cubic-bezier(0.15, 0.85, 0.35, 1.2) forwards;
+        }
+
+        @keyframes epicZoom {
+            0% { transform: scale(5); filter: blur(20px); opacity: 0; }
+            100% { transform: scale(1); filter: blur(0); opacity: 1; }
+        }
+
+        .name-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 10rem; font-style: italic;
+            color: #fff; margin: 0; line-height: 0.8;
+            text-shadow: 0 0 50px rgba(255, 128, 171, 0.8);
+        }
+
+        .from-denis {
+            font-family: 'Caveat', cursive;
+            font-size: 3.5rem; color: #ff80ab;
+            margin-top: 10px; opacity: 0;
+            animation: slideUp 1s 1.2s forwards;
+        }
+
+        .cute-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 100; font-size: 1rem;
+            color: #fff; letter-spacing: 5px;
+            margin-top: 40px; opacity: 0;
+            max-width: 600px; line-height: 1.6;
+            animation: fadeIn 2s 2.5s forwards;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .shake { animation: shake 0.5s; }
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0); }
+            10%, 30%, 50%, 70%, 90% { transform: translate(-10px, -10px); }
+            20%, 40%, 60%, 80% { transform: translate(10px, 10px); }
+        }
+
+        .pink-bg {
+            background: radial-gradient(circle, #2b0015 0%, #000 100%) !important;
+        }
+    </style>
+</head>
+<body id="main-body">
+
+<canvas id="stars"></canvas>
+<div id="flash"></div>
+<audio id="music" src="music.mp3"></audio>
+
+<div id="ui">
+    <button id="start-trigger" onclick="launch()">ОТКРЫТЬ ПОСЛАНИЕ</button>
+
+    <div id="loader">
+        <div class="log-text" id="log-info">СКАНИРОВАНИЕ ВСЕЛЕННОЙ...</div>
+        <div class="progress-bar"><div id="bar"></div></div>
+    </div>
+
+    <div id="final">
+        <div style="letter-spacing: 15px; font-weight: 100; color: #fff; margin-bottom: 20px;">ТЫ МОЙ ВЕСЬ МИР</div>
+        <h1 class="name-main">Зарина</h1>
+        <div class="from-denis">Твой Денис</div>
+        <div class="cute-text">
+            Любимый мой Мышонок, ты самое прекрасное, что случилось со мной в этой бесконечной цифровой реальности. Я всегда буду рядом. ❤️
+        </div>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    const music = document.getElementById('music');
+    let w, h, stars = [];
+    let state = 'idle';
+
+    function init() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+        stars = [];
+        for(let i=0; i<600; i++) {
+            stars.push({ x: Math.random()*w-w/2, y: Math.random()*h-h/2, z: Math.random()*w });
+        }
+    }
+
+    function animate() {
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0,0,w,h);
+        ctx.save();
+        ctx.translate(w/2, h/2);
+        stars.forEach(s => {
+            let x = s.x / (s.z / w);
+            let y = s.y / (s.z / w);
+            let size = (1 - s.z/w) * 3;
+            ctx.fillStyle = state === 'love' ? '#ff80ab' : '#fff';
+            ctx.beginPath(); ctx.arc(x, y, size, 0, Math.PI*2); ctx.fill();
+            s.z -= (state === 'love' ? 12 : 0.5);
+            if(s.z <= 0) s.z = w;
+        });
+        ctx.restore();
+        requestAnimationFrame(animate);
+    }
+
+    init(); animate();
+    window.onresize = init;
+
+    function launch() {
+        document.getElementById('start-trigger').style.display = 'none';
+        document.getElementById('loader').style.display = 'block';
+        
+        let p = 0;
+        const bar = document.getElementById('bar');
+        const log = document.getElementById('log-info');
+        const phrases = ["ПОИСК СЧАСТЬЯ...", "ОБЪЕКТ НАЙДЕН", "ИНИЦИАЛИЗАЦИЯ ЧУВСТВ...", "ПОЧТИ ГОТОВО...", "СМОТРИ!"];
+
+        const interval = setInterval(() => {
+            p += 1;
+            bar.style.width = p + "%";
+            log.innerText = phrases[Math.floor(p/21)];
+
+            if(p >= 100) {
+                clearInterval(interval);
+                boom();
+            }
+        }, 30);
+    }
+
+    function boom() {
+        const flash = document.getElementById('flash');
+        const body = document.getElementById('main-body');
+        
+        flash.style.display = 'block';
+        
+        setTimeout(() => {
+            state = 'love';
+            music.play();
+            flash.style.display = 'none';
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('final').style.display = 'block';
+            body.classList.add('pink-bg');
+            body.classList.add('shake'); 
+            
+            setInterval(createExplosionHeart, 100);
+        }, 150); 
+    }
+
+    function createExplosionHeart() {
+        const heart = document.createElement('div');
+        heart.innerHTML = ['❤️','💖','✨'][Math.floor(Math.random()*3)];
+        heart.style.position = 'fixed';
+        heart.style.left = '50vw';
+        heart.style.top = '50vh';
+        heart.style.fontSize = '2rem';
+        heart.style.zIndex = '5';
+        heart.style.transition = '1.2s cubic-bezier(0.15, 0.85, 0.35, 1.2)';
+        document.body.appendChild(heart);
+
+        const angle = Math.random() * Math.PI * 2;
+        const dist = Math.random() * 600 + 200;
+        const x = Math.cos(angle) * dist;
+        const y = Math.sin(angle) * dist;
+
+        setTimeout(() => {
+            heart.style.transform = `translate(${x}px, ${y}px) scale(0) rotate(${Math.random()*360}deg)`;
+            heart.style.opacity = '0';
+        }, 10);
+
+        setTimeout(() => heart.remove(), 1200);
+    }
+</script>
+
+</body>
+</html>
