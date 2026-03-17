@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Для Тебя</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="./assets/index-KUK24Dm7.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CSd4kJU4.css">
+</head>
+<body>
+    <!-- Кастомный курсор -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Аудио -->
+    <audio id="bg-music" loop>
+        <source src="./assets/music-Cu9twZe-.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Кнопка музыки -->
+    <button class="music-toggle" id="musicToggle" aria-label="Включить музыку">
+        <svg class="music-icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13M9 18a3 3 0 11-6 0 3 3 0 016 0zm12-2a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <line x1="1" y1="1" x2="23" y2="23"/>
+        </svg>
+        <svg class="music-icon-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13M9 18a3 3 0 11-6 0 3 3 0 016 0zm12-2a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+    </button>
+
+    <!-- Экран 1: Заставка -->
+    <div id="intro-screen" class="screen active">
+        <canvas id="canvas"></canvas>
+        <div class="overlay">
+            <h1 class="glitch" data-text="НАЖМИ НА МЕНЯ">НАЖМИ НА МЕНЯ</h1>
+            <p class="subtitle">я покажу тебе что-то важное</p>
+            <div class="click-hint">
+                <span class="pulse-ring"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Экран 2: Причины любви -->
+    <div id="love-screen" class="screen">
+        <!-- Плавающие фото на фоне -->
+        <div class="photo-background">
+            <div class="floating-photo" style="background-image: url('./assets/photo_1_2026-03-17_17-40-53-DiOoozs2.jpg')" data-speed="0.02"></div>
+            <div class="floating-photo" style="background-image: url('./assets/photo_2_2026-03-17_17-40-53-DciMqmpQ.jpg')" data-speed="0.03"></div>
+            <div class="floating-photo" style="background-image: url('./assets/photo_3_2026-03-17_17-40-53-DhZXSHf3.jpg')" data-speed="0.025"></div>
+            <div class="floating-photo" style="background-image: url('./assets/photo_4_2026-03-17_17-40-53-8zc8nZ1D.jpg')" data-speed="0.035"></div>
+            <div class="floating-photo" style="background-image: url('./assets/photo_5_2026-03-17_17-40-53-Dl2bzpcb.jpg')" data-speed="0.02"></div>
+            <div class="floating-photo" style="background-image: url('./assets/photo_6_2026-03-17_17-40-53-Bzcb9CcS.jpg')" data-speed="0.03"></div>
+            <div class="floating-photo" style="background-image: url('./assets/photo_7_2026-03-17_17-40-53-DnzMGgJ3.jpg')" data-speed="0.025"></div>
+            <div class="floating-photo" style="background-image: url('./assets/photo_8_2026-03-17_17-40-53-bxsQcbCA.jpg')" data-speed="0.035"></div>
+        </div>
+
+        <!-- Плавающие частицы -->
+        <div class="particle-container" id="love-particles"></div>
+
+        <div class="content-wrapper">
+            <header class="header">
+                <div class="header-decoration">
+                    <span class="dot"></span>
+                    <span class="line"></span>
+                    <span class="dot"></span>
+                </div>
+                <h1 class="love-title">25 причин<br>почему я люблю тебя</h1>
+                <p class="love-subtitle">кликни на карточку, чтобы узнать</p>
+                <div class="header-decoration">
+                    <span class="dot"></span>
+                    <span class="line"></span>
+                    <span class="dot"></span>
+                </div>
+            </header>
+
+            <!-- ТАЙМЛАЙН -->
+            <section class="timeline-section">
+                <div class="timeline-header">
+                    <span class="timeline-icon">💫</span>
+                    <h2>Наша история</h2>
+                    <p>моменты, которые изменили всё</p>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item" data-index="0">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-card">
+                                <div class="timeline-image">
+                                    <img src="./assets/photo_1_2026-03-17_17-40-53-DiOoozs2.jpg" alt="Наше начало">
+                                </div>
+                                <div class="timeline-text">
+                                    <span class="timeline-date">7 класс</span>
+                                    <h3>Всё началось</h3>
+                                    <p>Я впервые увидел тебя. Твой смех заполнил всё вокруг, и я понял — ты особенная</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-index="1">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-card">
+                                <div class="timeline-image">
+                                    <img src="./assets/photo_2_2026-03-17_17-40-53-DciMqmpQ.jpg" alt="Первый разговор">
+                                </div>
+                                <div class="timeline-text">
+                                    <span class="timeline-date">Первый разговор</span>
+                                    <h3>Мы заговорили</h3>
+                                    <p>Я нервничал, но ты была такой искренней. Разговор длился часами</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-index="2">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-card">
+                                <div class="timeline-image">
+                                    <img src="./assets/photo_3_2026-03-17_17-40-53-DhZXSHf3.jpg" alt="Первое свидание">
+                                </div>
+                                <div class="timeline-text">
+                                    <span class="timeline-date">Первый раз вместе</span>
+                                    <h3>Наше первое свидание</h3>
+                                    <p>Я не хотел чтобы этот момент заканчивался. Время остановилось</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-index="3">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-card">
+                                <div class="timeline-image">
+                                    <img src="./assets/photo_4_2026-03-17_17-40-53-8zc8nZ1D.jpg" alt="Первое признание">
+                                </div>
+                                <div class="timeline-text">
+                                    <span class="timeline-date">Важный момент</span>
+                                    <h3>Я понял что люблю</h3>
+                                    <p>В один обычный день я осознал — ты стала частью моей жизни</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-index="4">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-card timeline-card--love">
+                                <div class="timeline-image">
+                                    <img src="./assets/photo_5_2026-03-17_17-40-53-Dl2bzpcb.jpg" alt="Сейчас">
+                                </div>
+                                <div class="timeline-text">
+                                    <span class="timeline-date">Сейчас</span>
+                                    <h3>Мы вместе</h3>
+                                    <p>Каждый день с тобой — подарок. И это только начало нашей истории 💘</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-index="5">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-card timeline-card--future">
+                                <div class="timeline-image">
+                                    <img src="./assets/photo_6_2026-03-17_17-40-53-Bzcb9CcS.jpg" alt="Будущее">
+                                </div>
+                                <div class="timeline-text">
+                                    <span class="timeline-date">Будущее</span>
+                                    <h3>Всё впереди</h3>
+                                    <p>Я хочу пройти каждый шаг этой жизни с тобой. Вместе навсегда</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ВСЕ 25 ПРИЧИН В ВИДЕ FLIP-КАРТОЧЕК -->
+            <section class="reasons-section">
+                <div class="reasons-header">
+                    <span class="reasons-icon">✨</span>
+                    <h2>25 причин</h2>
+                    <p>кликни на каждую</p>
+                </div>
+
+                <div class="reasons-grid">
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">01</span>
+                                <span class="flip-emoji">🎨</span>
+                                <h3>Подача</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты умеешь рассказать так, что всё становится интересным</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">02</span>
+                                <span class="flip-emoji">🦋</span>
+                                <h3>Характер</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты — единственная в своём роде, такой больше нет</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">03</span>
+                                <span class="flip-emoji">😂</span>
+                                <h3>Юмор</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>С тобой каждый момент наполнен смехом и радостью</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">04</span>
+                                <span class="flip-emoji">🌹</span>
+                                <h3>Красота</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты прекрасна внутри и снаружи, каждый день</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">05</span>
+                                <span class="flip-emoji">🤗</span>
+                                <h3>Забота</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты всегда рядом, когда я нуждаюсь в тепле и поддержке</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">06</span>
+                                <span class="flip-emoji">🐱</span>
+                                <h3>Милота</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты будто котёнок — такая же нежная и трогательная</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">07</span>
+                                <span class="flip-emoji">🧠</span>
+                                <h3>Рациональность</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты находишь выход из любой ситуации, даже самой сложной</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">08</span>
+                                <span class="flip-emoji">💪</span>
+                                <h3>Трудолюбие</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты всегда готова работать и стремиться к лучшему</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">09</span>
+                                <span class="flip-emoji">🔮</span>
+                                <h3>Дальновидность</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты умеешь планировать и видеть будущее наперёд</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">10</span>
+                                <span class="flip-emoji">🕊️</span>
+                                <h3>Утешение</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Когда ты говоришь со мной — мне спокойно и тепло</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">11</span>
+                                <span class="flip-emoji">🎤</span>
+                                <h3>Голос</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты отлично поёшь, а твой милый голос сводит меня с ума</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">12</span>
+                                <span class="flip-emoji">🌌</span>
+                                <h3>Глаза</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Они как космос — мне всегда нравится на них смотреть</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">13</span>
+                                <span class="flip-emoji">☀️</span>
+                                <h3>Улыбка</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Она делает мой день ярче, освещает всё вокруг</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">14</span>
+                                <span class="flip-emoji">👫</span>
+                                <h3>Дружелюбие</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты можешь подружиться со всеми, тебе не важна внешность</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">15</span>
+                                <span class="flip-emoji">💎</span>
+                                <h3>Искренность</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты всегда говоришь что думаешь, ничего не утаивая</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">16</span>
+                                <span class="flip-emoji">🐵</span>
+                                <h3>Эмпатия</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Тебе жалко обезьянку Панчо — это мило и приятно</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">17</span>
+                                <span class="flip-emoji">💗</span>
+                                <h3>Умение любить</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Я чувствую, что ты любишь меня, даже без слов</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">18</span>
+                                <span class="flip-emoji">🎯</span>
+                                <h3>Целеустремлённость</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты всегда добиваешься своей цели, даже если она нелёгкая</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">19</span>
+                                <span class="flip-emoji">📚</span>
+                                <h3>Упорство</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Готовишься к ЕНТ сама, учишь английский, стремишься стать юристом — ты умница!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">20</span>
+                                <span class="flip-emoji">👑</span>
+                                <h3>Уверенность</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты всегда была уверенной в себе, особенно со сверстниками</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">21</span>
+                                <span class="flip-emoji">🙈</span>
+                                <h3>Стеснительность</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты такая милая, когда стесняешься при моих родственниках</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">22</span>
+                                <span class="flip-emoji">🌻</span>
+                                <h3>Доброта</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Ты не смотришь на лицо или фигуру — ты снисходительна к каждому</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">23</span>
+                                <span class="flip-emoji">✨</span>
+                                <h3>Фигура</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Она прекрасна. Миллион раз описывал, но до сих пор в восторге</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">24</span>
+                                <span class="flip-emoji">😤</span>
+                                <h3>Милый гнев</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>Даже когда ты злая — ты такая миленькая (не путать с равнодушием)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flip-card flip-card--last" data-flip>
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <span class="flip-number">25</span>
+                                <span class="flip-emoji">🎵</span>
+                                <h3>Твой смех</h3>
+                            </div>
+                            <div class="flip-card-back">
+                                <p>В 7 классе я влюбился именно в него. Когда представлял тебя — ты всегда смеялась. Я люблю тебя за жизнерадостность и оптимизм. Люблю тебя 💘</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="footer-decoration">
+                    <span class="heart-line">❤</span>
+                </div>
+                <p class="final-message">Я люблю тебя больше, чем можно выразить словами</p>
+                <div class="hearts">
+                    <span>💕</span><span>💗</span><span>💖</span><span>💕</span><span>💗</span>
+                </div>
+            </footer>
+        </div>
+
+        <!-- Кнопка "наверх" -->
+        <button class="scroll-to-top" id="scrollToTop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 19V5M5 12l7-7 7 7"/>
+            </svg>
+        </button>
+    </div>
+
+</body>
+</html>
